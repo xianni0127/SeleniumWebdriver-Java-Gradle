@@ -1,0 +1,62 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+ext.seleniumVersion    = "2.45.0"
+
+repositories {
+    mavenCentral()
+}
+
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', '', 'src/test/resources']
+        }
+    }
+}
+
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testCompile
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
+
+    testCompile group: 'info.cukes',name:'cucumber-java', version: '1.2.4'
+    testCompile group: 'info.cukes',name:'cucumber-junit', version: '1.2.4'
+    testCompile 'io.cucumber:cucumber-java:4.3.1'
+
+    testCompile 'org.jsoup:jsoup:1.9.2'
+    testCompile 'com.fasterxml.jackson.core:jackson-core:2.8.1'
+    testCompile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+    testCompile 'com.google.code.gson:gson:2.3.1'
+    testCompile 'org.apache.httpcomponents:httpclient:4.4.1'
+
+    testCompile group: 'org.junit.platform', name: 'junit-platform-launcher', version:'1.4.2'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:'5.4.2'
+    testCompile group: 'org.junit.vintage', name: 'junit-vintage-engine', version:'5.4.2'
+
+    testRuntime("org.junit.platform:junit-platform-launcher:1.4.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testRuntime("org.junit.vintage:junit-vintage-engine:5.4.2")
+
+
+}

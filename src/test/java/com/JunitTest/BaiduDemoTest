@@ -1,0 +1,30 @@
+package com.JunitTest;
+
+import com.pages.HomePage;
+import com.pages.SearchPage;
+import org.openqa.selenium.WebDriver;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.Before;
+import org.junit.After;
+
+import org.junit.Assert;
+
+
+public class BaiduDemoTest extends BaseTest {
+
+    @Test
+    public void testBaidu() {
+
+        homePage.go();
+
+        homePage.search("Selenium");
+
+        searchPage.assertSeleniumPresent("Selenium");
+
+    }
+
+
+}
+
+

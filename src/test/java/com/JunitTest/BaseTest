@@ -1,0 +1,34 @@
+package com.JunitTest;
+
+import com.pages.HomePage;
+import com.pages.SearchPage;
+import com.pages.BasePage;
+import org.openqa.selenium.WebDriver;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.Before;
+import org.junit.After;
+import com.common.BrowserFactory;
+import org.openqa.selenium.support.PageFactory;
+
+
+public class BaseTest {
+
+    protected WebDriver webDriver;
+    protected HomePage homePage;
+    protected SearchPage searchPage;
+
+
+    @Before
+    public void setUp() {
+        webDriver = BrowserFactory.INSTANCE.getWebDriver();
+        homePage = PageFactory.initElements(webDriver, HomePage.class);
+        searchPage = PageFactory.initElements(webDriver, SearchPage.class);
+    }
+
+    @After
+    public void tearDown() {
+        webDriver.close();
+    }
+
+}
